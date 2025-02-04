@@ -9,6 +9,13 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Welcome to the Quiz Application!</h1>
+
+    <h2>Available Quizzes:</h2>
+    <ul>
+        {% for quiz in quizzes %}
+            <li><a href="{{ path('app_quiz_show', { 'id': quiz.id }) }}">{{ quiz.prompt }}</a></li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}
