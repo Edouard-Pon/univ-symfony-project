@@ -94,6 +94,11 @@ final class QuizController extends AbstractController
         $userPrompt = $request->request->get('prompt');
         $numberOfQuestions = $request->request->get('number_of_questions');
         $optionsType = $request->request->get('options_type');
+
+        if ($optionsType === 'mixed') {
+            $optionsType = 'single or multiple';
+        }
+
         $jsonTemplate = '
             {
                 "quiz": {
@@ -117,13 +122,21 @@ final class QuizController extends AbstractController
 
         $prompt = "
             GENERATE A $userPrompt QUIZ WITH $numberOfQuestions QUESTIONS. $optionsType CHOICE QUESTIONS.
+            ENSURE THAT THE QUESTIONS MATCH THE THEME OF THE QUIZ.
             FOLLOW THESE RULES:
             1. Return valid JSON matching this structure:
+            ```json
             $jsonTemplate
-            2. Use lowercase for all keys
-            3. Ensure correct_answer is always an array
-            4. Ensure that the number of questions matches the number requested
-            5. Ensure that the theme of the quiz matches the questions
+            ```
+            2. Use lowercase for all keys.
+            3. Ensure that the number of questions matches the number requested.
+            4. Ensure that the theme of the quiz matches the questions.
+            5. Ensure that if user requests single or multiple choice questions, the quiz contains both.
+            6. Ensure that if user requests single choice questions, the quiz contains only single choice questions.
+            7. Ensure that if user requests multiple choice questions, the quiz contains only multiple choice questions.
+            8. Ensure that the correct type of questions is returned.
+            9. Ensure that the single type questions have only one correct answer.
+            10. Ensure that the multiple type questions have more than one correct answer.
         ";
 
         $jsonPayload = [
@@ -194,7 +207,7 @@ final class QuizController extends AbstractController
 
             foreach ($quizData['quiz']['questions'] as $questionData) {
                 $question = new Question();
-                $question->setType($questionData['type'] === QuestionType::SINGLE ? QuestionType::SINGLE : QuestionType::MULTIPLE);
+                $question->setType($questionData['type'] === QuestionType::SINGLE->value ? QuestionType::SINGLE : QuestionType::MULTIPLE);
                 $question->setTitle('Question: ' . $questionData['id']);
                 $question->setContent($questionData['question']);
                 $question->setQuiz($quiz);
