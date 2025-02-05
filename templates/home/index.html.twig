@@ -11,6 +11,20 @@
 <div class="example-wrapper">
     <h1>Welcome to the Quiz Application!</h1>
 
+    <h2>Generate your own quiz using AI</h2>
+    <form method="post" action="{{ path('app_quiz_generate') }}">
+        <label for="prompt">Prompt:</label>
+        <input type="text" id="prompt" name="prompt" required>
+        <label for="number_of_questions">Number of Questions:</label>
+        <input type="number" id="number_of_questions" name="number_of_questions" required>
+        <label for="options_type">Options type:</label>
+        <label for="single">Single choice</label>
+        <input type="radio" id="single" name="options_type" value="single" required />
+        <label for="multiple">Multiple choice</label>
+        <input type="radio" id="multiple" name="options_type" value="multiple" required />
+        <button type="submit">Generate Quiz</button>
+    </form>
+
     <h2>Available Quizzes:</h2>
     <ul>
         {% for quiz in quizzes %}
