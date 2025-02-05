@@ -85,7 +85,6 @@ final class QuizController extends AbstractController
         ]);
     }
 
-    // TODO - fix single / multiple choice
     #[Route('/quiz-generate', name: 'app_quiz_generate', methods: ['POST'])]
     public function create(Request $request, HttpClientInterface $httpClient, EntityManagerInterface $entityManager): Response
     {
@@ -102,7 +101,7 @@ final class QuizController extends AbstractController
                     "questions": [
                         {
                             "id": 1,
-                            "type": "single|multiple",
+                            "type": "single" or "multiple",
                             "question": "Question text?",
                             "options": [
                                 {"id": "a", "text": "Option 1", "correct": true},
@@ -125,7 +124,6 @@ final class QuizController extends AbstractController
             3. Ensure correct_answer is always an array
             4. Ensure that the number of questions matches the number requested
             5. Ensure that the theme of the quiz matches the questions
-            6. Ensure that the order of the correct answer is randomised
         ";
 
         $jsonPayload = [
@@ -196,7 +194,7 @@ final class QuizController extends AbstractController
 
             foreach ($quizData['quiz']['questions'] as $questionData) {
                 $question = new Question();
-//                $question->setType($questionData['type']);
+                $question->setType($questionData['type'] === QuestionType::SINGLE ? QuestionType::SINGLE : QuestionType::MULTIPLE);
                 $question->setTitle('Question: ' . $questionData['id']);
                 $question->setContent($questionData['question']);
                 $question->setQuiz($quiz);
