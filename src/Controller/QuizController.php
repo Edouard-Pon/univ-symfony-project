@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Option;
 use App\Entity\Question;
 use App\Entity\Quiz;
+use App\Enum\QuestionType;
 use App\Utils\QuizValidationUtility;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +25,15 @@ final class QuizController extends AbstractController
 
         if (!$quiz) {
             throw $this->createNotFoundException('The quiz does not exist');
+        }
+        foreach ($quiz->getQuestions() as $question) {
+            $options = $question->getOptions()->toArray();
+            shuffle($options);
+            $question->getOptions()->clear();
+            foreach ($options as $option) {
+                $question->addOption($option);
+            }
+            $quiz->addQuestion($question);
         }
 
         return $this->render('quiz/index.html.twig', [
@@ -46,11 +56,25 @@ final class QuizController extends AbstractController
         $totalQuestions = count($quiz->getQuestions());
 
         foreach ($quiz->getQuestions() as $question) {
-            $selectedOptionId = $request->request->get('question' . $question->getId());
-            $selectedOption = $entityManager->getRepository(Option::class)->find($selectedOptionId);
+            if ($question->getType() === QuestionType::MULTIPLE) {
+                $selectedOptionIds = $request->request->all('question' . $question->getId());
+                $correctOptions = $question->getOptions()->filter(function($option) {
+                    return $option->isCorrect();
+                });
 
-            if ($selectedOption && $selectedOption->isCorrect()) {
-                $correctAnswers++;
+                $correctOptionIds = $correctOptions->map(function($option) {
+                    return $option->getId();
+                })->toArray();
+
+                if (count($selectedOptionIds) === count($correctOptionIds) && !array_diff($selectedOptionIds, $correctOptionIds)) {
+                    $correctAnswers++;
+                }
+            } else {
+                $selectedOptionId = $request->request->get('question' . $question->getId());
+                $selectedOption = $entityManager->getRepository(Option::class)->find($selectedOptionId);
+                if ($selectedOption && $selectedOption->isCorrect()) {
+                    $correctAnswers++;
+                }
             }
         }
 
