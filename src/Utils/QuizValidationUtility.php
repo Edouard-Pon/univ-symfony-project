@@ -4,7 +4,6 @@ namespace App\Utils;
 
 class QuizValidationUtility
 {
-    // TODO - add validation for single / multiple choice
     public static function validateJsonData(array $data): bool
     {
         if (!isset($data['quiz'])) {
@@ -21,6 +20,10 @@ class QuizValidationUtility
                 !isset($question['type']) ||
                 !isset($question['question']) ||
                 !isset($question['options'])) {
+                return false;
+            }
+
+            if ($question['type'] !== 'single' && $question['type'] !== 'multiple') {
                 return false;
             }
 

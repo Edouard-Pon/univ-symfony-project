@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Quiz;
 use App\Entity\Question;
 use App\Entity\Option;
+use App\Enum\QuestionType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -39,6 +40,7 @@ class QuizFixtures extends Fixture
         $question1 = new Question();
         $question1->setTitle('First Question Title');
         $question1->setContent('First Question Content');
+        $question1->setType(QuestionType::SINGLE);
 
         $option1 = new Option();
         $option1->setContent('First Option Content');
@@ -57,6 +59,7 @@ class QuizFixtures extends Fixture
         $question2 = new Question();
         $question2->setTitle('Second Question Title');
         $question2->setContent('Second Question Content');
+        $question2->setType(QuestionType::SINGLE);
 
         $option3 = new Option();
         $option3->setContent('Third Option Content');
@@ -75,6 +78,7 @@ class QuizFixtures extends Fixture
         $question3 = new Question();
         $question3->setTitle('Third Question Title');
         $question3->setContent('Third Question Content');
+        $question3->setType(QuestionType::SINGLE);
 
         $option5 = new Option();
         $option5->setContent('Fifth Option Content');
@@ -93,6 +97,7 @@ class QuizFixtures extends Fixture
         $question4 = new Question();
         $question4->setTitle('Fourth Question Title');
         $question4->setContent('Fourth Question Content');
+        $question4->setType(QuestionType::SINGLE);
 
         $option7 = new Option();
         $option7->setContent('Seventh Option Content');
@@ -111,6 +116,7 @@ class QuizFixtures extends Fixture
         $question5 = new Question();
         $question5->setTitle('Fifth Question Title');
         $question5->setContent('Fifth Question Content');
+        $question5->setType(QuestionType::SINGLE);
 
         $option9 = new Option();
         $option9->setContent('Ninth Option Content');
@@ -150,10 +156,11 @@ class QuizFixtures extends Fixture
         $question2 = new Question();
         $question2->setTitle('Second Question Title');
         $question2->setContent('Second Question Content');
+        $question2->setType(QuestionType::MULTIPLE);
 
         $option3 = new Option();
         $option3->setContent('Third Option Content');
-        $option3->setCorrect(false);
+        $option3->setCorrect(true);
 
         $option4 = new Option();
         $option4->setContent('Fourth Option Content');

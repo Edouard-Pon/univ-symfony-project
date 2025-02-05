@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\QuestionType;
 use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,6 +22,9 @@ class Question
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
+
+    #[ORM\Column(type: 'string', enumType: QuestionType::class)]
+    private QuestionType $type;
 
     /**
      * @var Collection<int, Option>
@@ -61,6 +65,18 @@ class Question
     public function setContent(string $content): static
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getType(): QuestionType
+    {
+        return $this->type;
+    }
+
+    public function setType(QuestionType $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }

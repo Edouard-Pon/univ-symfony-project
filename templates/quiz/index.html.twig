@@ -25,8 +25,17 @@
                     <h3>{{ question.content }}</h3>
                     <ul>
                         {% for option in question.options %}
-                                <input type="radio" id="option{{ option.id }}" name="question{{ question.id }}" value="{{ option.id }}">
-                                <label for="option{{ option.id }}">{{ option.content }}</label>
+                            {% if question.type == constant('App\\Enum\\QuestionType::MULTIPLE') %}
+                                <li style="list-style: none">
+                                    <input type="checkbox" id="option{{ option.id }}" name="question{{ question.id }}[]" value="{{ option.id }}">
+                                    <label for="option{{ option.id }}">{{ option.content }}</label>
+                                </li>
+                            {% else %}
+                                <li style="list-style: none">
+                                    <input type="radio" id="option{{ option.id }}" name="question{{ question.id }}" value="{{ option.id }}">
+                                    <label for="option{{ option.id }}">{{ option.content }}</label>
+                                </li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </div>

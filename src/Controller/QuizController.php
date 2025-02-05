@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Option;
 use App\Entity\Question;
 use App\Entity\Quiz;
+use App\Enum\QuestionType;
 use App\Utils\QuizValidationUtility;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +25,15 @@ final class QuizController extends AbstractController
 
         if (!$quiz) {
             throw $this->createNotFoundException('The quiz does not exist');
+        }
+        foreach ($quiz->getQuestions() as $question) {
+            $options = $question->getOptions()->toArray();
+            shuffle($options);
+            $question->getOptions()->clear();
+            foreach ($options as $option) {
+                $question->addOption($option);
+            }
+            $quiz->addQuestion($question);
         }
 
         return $this->render('quiz/index.html.twig', [
@@ -46,11 +56,25 @@ final class QuizController extends AbstractController
         $totalQuestions = count($quiz->getQuestions());
 
         foreach ($quiz->getQuestions() as $question) {
-            $selectedOptionId = $request->request->get('question' . $question->getId());
-            $selectedOption = $entityManager->getRepository(Option::class)->find($selectedOptionId);
+            if ($question->getType() === QuestionType::MULTIPLE) {
+                $selectedOptionIds = $request->request->all('question' . $question->getId());
+                $correctOptions = $question->getOptions()->filter(function($option) {
+                    return $option->isCorrect();
+                });
 
-            if ($selectedOption && $selectedOption->isCorrect()) {
-                $correctAnswers++;
+                $correctOptionIds = $correctOptions->map(function($option) {
+                    return $option->getId();
+                })->toArray();
+
+                if (count($selectedOptionIds) === count($correctOptionIds) && !array_diff($selectedOptionIds, $correctOptionIds)) {
+                    $correctAnswers++;
+                }
+            } else {
+                $selectedOptionId = $request->request->get('question' . $question->getId());
+                $selectedOption = $entityManager->getRepository(Option::class)->find($selectedOptionId);
+                if ($selectedOption && $selectedOption->isCorrect()) {
+                    $correctAnswers++;
+                }
             }
         }
 
@@ -61,7 +85,6 @@ final class QuizController extends AbstractController
         ]);
     }
 
-    // TODO - fix single / multiple choice
     #[Route('/quiz-generate', name: 'app_quiz_generate', methods: ['POST'])]
     public function create(Request $request, HttpClientInterface $httpClient, EntityManagerInterface $entityManager): Response
     {
@@ -71,6 +94,11 @@ final class QuizController extends AbstractController
         $userPrompt = $request->request->get('prompt');
         $numberOfQuestions = $request->request->get('number_of_questions');
         $optionsType = $request->request->get('options_type');
+
+        if ($optionsType === 'mixed') {
+            $optionsType = 'single or multiple';
+        }
+
         $jsonTemplate = '
             {
                 "quiz": {
@@ -78,7 +106,7 @@ final class QuizController extends AbstractController
                     "questions": [
                         {
                             "id": 1,
-                            "type": "single|multiple",
+                            "type": "single" or "multiple",
                             "question": "Question text?",
                             "options": [
                                 {"id": "a", "text": "Option 1", "correct": true},
@@ -94,14 +122,21 @@ final class QuizController extends AbstractController
 
         $prompt = "
             GENERATE A $userPrompt QUIZ WITH $numberOfQuestions QUESTIONS. $optionsType CHOICE QUESTIONS.
+            ENSURE THAT THE QUESTIONS MATCH THE THEME OF THE QUIZ.
             FOLLOW THESE RULES:
             1. Return valid JSON matching this structure:
+            ```json
             $jsonTemplate
-            2. Use lowercase for all keys
-            3. Ensure correct_answer is always an array
-            4. Ensure that the number of questions matches the number requested
-            5. Ensure that the theme of the quiz matches the questions
-            6. Ensure that the order of the correct answer is randomised
+            ```
+            2. Use lowercase for all keys.
+            3. Ensure that the number of questions matches the number requested.
+            4. Ensure that the theme of the quiz matches the questions.
+            5. Ensure that if user requests single or multiple choice questions, the quiz contains both.
+            6. Ensure that if user requests single choice questions, the quiz contains only single choice questions.
+            7. Ensure that if user requests multiple choice questions, the quiz contains only multiple choice questions.
+            8. Ensure that the correct type of questions is returned.
+            9. Ensure that the single type questions have only one correct answer.
+            10. Ensure that the multiple type questions have more than one correct answer.
         ";
 
         $jsonPayload = [
@@ -172,7 +207,7 @@ final class QuizController extends AbstractController
 
             foreach ($quizData['quiz']['questions'] as $questionData) {
                 $question = new Question();
-//                $question->setType($questionData['type']);
+                $question->setType($questionData['type'] === QuestionType::SINGLE->value ? QuestionType::SINGLE : QuestionType::MULTIPLE);
                 $question->setTitle('Question: ' . $questionData['id']);
                 $question->setContent($questionData['question']);
                 $question->setQuiz($quiz);
