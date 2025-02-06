@@ -74,8 +74,10 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^11.5",
         "doctrine/doctrine-fixtures-bundle": "^4.0",
-        "symfony/maker-bundle": "^1.62"
+        "phpunit/phpunit": "^11.5",
+        "symfony/maker-bundle": "^1.62",
+        "symfony/stopwatch": "7.2.*",
+        "symfony/web-profiler-bundle": "7.2.*"
     }
 }
