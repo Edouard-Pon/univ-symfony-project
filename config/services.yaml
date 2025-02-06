@@ -6,6 +6,7 @@
 parameters:
     API_URL: '%env(API_URL)%'
     LLM_MODEL: '%env(LLM_MODEL)%'
+    RANDOM_NUMBER_API_URL: '%env(RANDOM_NUMBER_API_URL)%'
 
 services:
     # default configuration for services in *this* file

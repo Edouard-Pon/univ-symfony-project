@@ -22,6 +22,7 @@ final class QuizController extends AbstractController
     public function show(int $id, EntityManagerInterface $entityManager): Response
     {
         $quiz = $entityManager->getRepository(Quiz::class)->find($id);
+        $randomNumberApiUrl = $this->getParameter('RANDOM_NUMBER_API_URL');
 
         if (!$quiz) {
             throw $this->createNotFoundException('The quiz does not exist');
@@ -38,6 +39,7 @@ final class QuizController extends AbstractController
 
         return $this->render('quiz/index.html.twig', [
             'quiz' => $quiz,
+            'random_number_api_url' => $randomNumberApiUrl,
         ]);
     }
 
