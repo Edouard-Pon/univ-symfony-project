@@ -42,5 +42,26 @@
             {% endfor %}
             <button type="submit">Submit</button>
         </form>
+
+        <h3>Don't know which answer to choose? Just enter the number of answers and we will decide for you!</h3>
+        <input type="number" id="numAnswers" min="1">
+        <button type="button" onclick="getRandomNumber()">Get Random Number</button>
+        <p id="randomNumberResult"></p>
     </div>
+
+    <script>
+        const randomNumberApiUrl = "{{ random_number_api_url }}";
+
+        function getRandomNumber() {
+            const numAnswers = document.getElementById('numAnswers').value;
+            fetch(`${randomNumberApiUrl}${numAnswers}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('randomNumberResult').innerText = `Random Number: ${data.random_number}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching random number:', error);
+                });
+        }
+    </script>
 {% endblock %}
