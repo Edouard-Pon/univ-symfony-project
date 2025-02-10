@@ -80,6 +80,23 @@ final class QuizController extends AbstractController
             }
         }
 
+        return $this->redirectToRoute('app_quiz_result', [
+            'quizId' => $quizId,
+            'correctAnswers' => $correctAnswers,
+            'totalQuestions' => $totalQuestions,
+        ]);
+    }
+
+    // TODO - check this route and fix it if needed
+    #[Route('/quiz-result/{quizId}/{correctAnswers}/{totalQuestions}', name: 'app_quiz_result')]
+    public function result(int $quizId, int $correctAnswers, int $totalQuestions, EntityManagerInterface $entityManager): Response
+    {
+        $quiz = $entityManager->getRepository(Quiz::class)->find($quizId);
+
+        if (!$quiz) {
+            throw $this->createNotFoundException('The quiz does not exist');
+        }
+
         return $this->render('quiz/result.html.twig', [
             'quiz' => $quiz,
             'correctAnswers' => $correctAnswers,
