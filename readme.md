@@ -12,11 +12,23 @@ Ce projet est destiné à la génération de tests de type QCM à l'aide de l'in
     ⚠ ATTENTION : Étant donné qu'il s'agit d'une intelligence artificielle, assurez-vous d'avoir suffisamment de mémoire vidéo pour exécuter le modèle. On a utilisé le modèle 14B avec 8 Go de mémoire vidéo.
 
     Ce service repose sur Ollama, et pour l'installer, exécutez les commandes suivantes :
+
+   Veuiilez visiter le lien suivant pour plus d'informations sur Ollama Docker [Ollama Docker](https://hub.docker.com/r/ollama/ollama)
     
+   GPU:
+   ```sh
+   docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+   ```
+
+   CPU:
     ```sh 
     docker run -d -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
-    docker exec -it ollama ollama pull deepseek-r1:14b
     ```
+   
+   Pour pull l'image:
+    ```sh
+   docker exec -it ollama ollama pull deepseek-r1:14b
+   ```
 
     OU (si vous avez déjà téléchargé l'image)
 
