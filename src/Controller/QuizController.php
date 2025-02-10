@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 final class QuizController extends AbstractController
 {
-    #[Route('/quiz/{id}', name: 'app_quiz_show')]
+    #[Route('/{_locale<%app.supported_locales%>}/quiz/{id}', name: 'app_quiz_show')]
     public function show(int $id, EntityManagerInterface $entityManager): Response
     {
         $quiz = $entityManager->getRepository(Quiz::class)->find($id);
@@ -44,7 +44,7 @@ final class QuizController extends AbstractController
     }
 
 
-    #[Route('/submit-quiz', name: 'app_quiz_submit', methods: ['POST'])]
+    #[Route('/{_locale<%app.supported_locales%>}/submit-quiz', name: 'app_quiz_submit', methods: ['POST'])]
     public function submit(Request $request, EntityManagerInterface $entityManager): Response
     {
         $quizId = $request->request->get('quiz_id');

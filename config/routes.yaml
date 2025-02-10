@@ -3,3 +3,9 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+homepage_redirect:
+    path: /
+    controller: App\Controller\SecurityController::urlRedirect
+    defaults:
+        url: /en/
