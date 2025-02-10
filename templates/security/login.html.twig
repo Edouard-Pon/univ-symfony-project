@@ -21,9 +21,10 @@
                 <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control p-2 mb-4 rounded bg-gray-900 text-white border border-indigo-500" autocomplete="email" required autofocus>
                 <label for="password" class="text-indigo-300 mb-2">Password</label>
                 <input type="password" name="_password" id="password" class="form-control p-2 mb-4 rounded bg-gray-900 text-white border border-indigo-500" autocomplete="current-password" required>
-               <button class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50" type="submit">
+                <button class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50" type="submit">
                    Sign in
-               </button>
+                </button>
+                <p class="text-white mt-4">No account? <a href="{{ path('app_register') }}" class="text-indigo-500 hover:text-indigo-300">Register</a></p>
             </div>
 
             <input type="hidden" name="_csrf_token"
@@ -41,5 +42,4 @@
             #}
         </form>
     </div>
-    <p>No account? <a href="{{ path('app_register') }}">Register</a>
 {% endblock %}
