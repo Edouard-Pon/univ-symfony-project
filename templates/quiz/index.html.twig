@@ -47,6 +47,14 @@
         <input type="number" id="numAnswers" min="1">
         <button type="button" onclick="getRandomNumber()">Get Random Number</button>
         <p id="randomNumberResult"></p>
+
+        <div>
+            <h2>Motivation:</h2>
+            <div>
+                <p id="motivation"></p>
+            </div>
+            <button id="btn-motivation">Get Motivation</button>
+        </div>
     </div>
 
     <script>
@@ -63,5 +71,11 @@
                     console.error('Error fetching random number:', error);
                 });
         }
+    </script>
+
+    <script>
+        document.getElementById('btn-motivation').addEventListener('click', function() {
+
+        });
     </script>
 {% endblock %}
