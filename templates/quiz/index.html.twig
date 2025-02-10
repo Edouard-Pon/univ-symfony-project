@@ -16,15 +16,15 @@
     </style>
     <div class="flex flex-col items-center justify-center w-full min-h-screen h-full bg-gray-900 text-white">
         <div class="flex flex-col mb-4 bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg">
-            <h1 class="text-white text-2xl mb-4">Quiz: {{ quiz.prompt }}</h1>
+            <h1 class="text-white text-2xl mb-4">{{ 'quiz_title'|trans({'%prompt%': quiz.prompt}) }}</h1>
 
             <ul class="list-disc list-inside mb-4">
-                <li>ID: {{ quiz.id }}</li>
-                <li>Prompt: {{ quiz.prompt }}</li>
-                <li>User: {{ quiz.user.email }}</li>
+                <li>{{ 'quiz_id'|trans }}: {{ quiz.id }}</li>
+                <li>{{ 'quiz_prompt'|trans }}: {{ quiz.prompt }}</li>
+                <li>{{ 'quiz_user'|trans }}: {{ quiz.user.email }}</li>
             </ul>
 
-            <h2 class="text-indigo-300 text-xl mb-4">Questions:</h2>
+            <h2 class="text-indigo-300 text-xl mb-4">{{ 'quiz_title'|trans({'%prompt%': quiz.prompt}) }}</h2>
             <form method="post" action="{{ path('app_quiz_submit') }}" class="flex flex-col">
                 <input type="hidden" name="quiz_id" value="{{ quiz.id }}">
                 {% for question in quiz.questions %}
@@ -39,7 +39,7 @@
                                     </li>
                                 {% else %}
                                     <li class="mb-2">
-                                        <input type="radio" id="option{{ option.id }}" name="question{{ question.id }}" value="{{ option.id }}" class="mr-2">
+                                        <input type="radio" id="option{{ option.id }}" name="question{{ question.id }}" value="{{ option.id }}" class="mr-2" required>
                                         <label for="option{{ option.id }}" class="text-white">{{ option.content }}</label>
                                     </li>
                                 {% endif %}
@@ -48,27 +48,30 @@
                     </div>
                 {% endfor %}
                 <button type="submit" class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
-                    Submit
+                    {{ 'submit_button'|trans }}
                 </button>
             </form>
 
         <div>
-            <h3 class="text-indigo-300 text-xl mt-6 mb-4">Don't know which answer to choose? Just enter the number of answers and we will decide for you!</h3>
+            <h3 class="text-indigo-300 text-xl mt-6 mb-4">{{ 'random_number_prompt'|trans }}</h3>
             <input type="number" id="numAnswers" min="1" class="form-control p-2 mb-4 rounded bg-gray-900 text-white border border-indigo-500">
             <button type="button" onclick="getRandomNumber()" class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
-                Get Random Number
+                {{ 'get_random_number_button'|trans }}
             </button>
             <p id="randomNumberResult" class="text-white mt-4"></p>
         </div>
-        
+
+
         <div>
-            <h2>Motivation:</h2>
-            <div>
+            <h3 class="text-indigo-300 text-xl mt-6 mb-4">{{ 'motivation_prompt'|trans }}</h3>
+            <div class="form-control p-2 mb-4 rounded bg-gray-900 text-white border border-indigo-500 min-h-9">
                 <p id="motivation"></p>
             </div>
-            <button id="btn-motivation" onclick="getMotivation()">Get Motivation</button>
+            <button id="btn-motivation" onclick="getMotivation()" class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                {{ 'get_motivation_button'|trans }}
+            </button>
         </div>
-        
+
     </div>
 
     <script>
@@ -80,7 +83,7 @@
             fetch(`${randomNumberApiUrl}${numAnswers}`)
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('randomNumberResult').innerText = `Random Number: ${data.random_number}`;
+                    document.getElementById('randomNumberResult').innerText = `{{ 'random_number_result'|trans }}: ${data.random_number}`;
                 })
                 .catch(error => {
                     console.error('Error fetching random number:', error);

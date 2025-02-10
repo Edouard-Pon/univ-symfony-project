@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Quiz{% endblock %}
 
 {% block body %}
 <style>
@@ -16,35 +16,35 @@
 </style>
 <div class="flex flex-col items-center justify-center w-full min-h-screen h-full bg-gray-900 text-white">
     <div class="flex flex-col mb-4 bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg">
-        <h1 class="text-white text-2xl mb-4">Welcome to the Quiz Application!</h1>
+        <h1 class="text-white text-2xl mb-4">{{ 'welcome_message'|trans }}</h1>
 
-        <h2 class="text-indigo-300 text-xl mb-4">Generate your own quiz using AI</h2>
+        <h2 class="text-indigo-300 text-xl mb-4">{{ 'generate_quiz'|trans }}</h2>
         <form method="post" action="{{ path('app_quiz_generate') }}" class="flex flex-col">
-            <label for="prompt" class="text-indigo-300 mb-2">Quiz Theme:</label>
+            <label for="prompt" class="text-indigo-300 mb-2">{{ 'prompt_label'|trans }}</label>
             <input type="text" id="prompt" name="prompt" class="form-control p-2 mb-4 rounded bg-gray-900 text-white border border-indigo-500" required>
 
-            <label for="number_of_questions" class="text-indigo-300 mb-2">Number of Questions:</label>
+            <label for="number_of_questions" class="text-indigo-300 mb-2">{{ 'number_of_questions_label'|trans }}</label>
             <input type="number" id="number_of_questions" name="number_of_questions" class="form-control p-2 mb-4 rounded bg-gray-900 text-white border border-indigo-500" required>
 
-            <label for="options_type" class="text-indigo-300 mb-2">Options type:</label>
+            <label for="options_type" class="text-indigo-300 mb-2">{{ 'options_type_label'|trans }}</label>
             <div class="flex flex-col mb-4">
                 <label for="single" class="text-white mb-1">
-                    <input type="radio" id="single" name="options_type" value="single" class="mr-2" required> Single choice
+                    <input type="radio" id="single" name="options_type" value="single" class="mr-2" required>{{ 'single_choice'|trans }}
                 </label>
                 <label for="multiple" class="text-white mb-1">
-                    <input type="radio" id="multiple" name="options_type" value="multiple" class="mr-2" required> Multiple choice
+                    <input type="radio" id="multiple" name="options_type" value="multiple" class="mr-2" required> {{ 'multiple_choice'|trans }}
                 </label>
                 <label for="mixed" class="text-white">
-                    <input type="radio" id="mixed" name="options_type" value="mixed" class="mr-2" required> Mixed
+                    <input type="radio" id="mixed" name="options_type" value="mixed" class="mr-2" required> {{ 'mixed_choice'|trans }}
                 </label>
             </div>
 
             <button type="submit" class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
-                Generate Quiz
+                {{ 'generate_button'|trans }}
             </button>
         </form>
 
-        <h2 class="text-indigo-300 text-xl mt-6 mb-4">Available Quizzes:</h2>
+        <h2 class="text-indigo-300 text-xl mt-6 mb-4">{{ 'available_quizzes'|trans }}</h2>
         <ul class="list-disc list-inside">
             {% for quiz in quizzes %}
                 <li><a href="{{ path('app_quiz_show', { 'id': quiz.id }) }}" class="text-indigo-500 hover:text-indigo-300">{{ quiz.prompt }}</a></li>

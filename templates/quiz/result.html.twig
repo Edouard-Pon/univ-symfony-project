@@ -5,12 +5,12 @@
 {% block body %}
     <div class="flex flex-col items-center justify-center w-full min-h-screen h-full bg-gray-900 text-white">
         <div class="flex flex-col mb-4 bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg">
-            <h1 class="text-white text-2xl mb-4">Quiz {{ quiz.prompt }} Result</h1>
+            <h1 class="text-white text-2xl mb-4">{{ 'quiz_result_title'|trans({'%prompt%': quiz.prompt}) }}</h1>
 
-            <p class="text-indigo-300 mb-4">You answered {{ correctAnswers }} out of {{ totalQuestions }} questions correctly.</p>
+            <p class="text-indigo-300 mb-4">{{ 'quiz_result_message'|trans({'%correct%': correctAnswers, '%total%': totalQuestions}) }}</p>
             <a href="{{ path('app_home') }}">
                 <button class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
-                    Return to home
+                    {{ 'return_home'|trans }}
                 </button>
             </a>
         </div>
