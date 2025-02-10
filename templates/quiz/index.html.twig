@@ -52,6 +52,7 @@
                 </button>
             </form>
 
+        <div>
             <h3 class="text-indigo-300 text-xl mt-6 mb-4">Don't know which answer to choose? Just enter the number of answers and we will decide for you!</h3>
             <input type="number" id="numAnswers" min="1" class="form-control p-2 mb-4 rounded bg-gray-900 text-white border border-indigo-500">
             <button type="button" onclick="getRandomNumber()" class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
@@ -59,10 +60,20 @@
             </button>
             <p id="randomNumberResult" class="text-white mt-4"></p>
         </div>
+        
+        <div>
+            <h2>Motivation:</h2>
+            <div>
+                <p id="motivation"></p>
+            </div>
+            <button id="btn-motivation" onclick="getMotivation()">Get Motivation</button>
+        </div>
+        
     </div>
 
     <script>
         const randomNumberApiUrl = "{{ random_number_api_url }}";
+        const motivationalApiUrl = "{{ motivational_api_url }}";
 
         function getRandomNumber() {
             const numAnswers = document.getElementById('numAnswers').value;
@@ -75,5 +86,17 @@
                     console.error('Error fetching random number:', error);
                 });
         }
+
+        function getMotivation() {
+            fetch(`${motivationalApiUrl}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('motivation').innerText = data.motivation;
+                })
+                .catch(error => {
+                    console.error('Error fetching motivation:', error);
+                });
+        }
     </script>
+
 {% endblock %}

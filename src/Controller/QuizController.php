@@ -21,6 +21,7 @@ final class QuizController extends AbstractController
     #[Route('/quiz/{id}', name: 'app_quiz_show')]
     public function show(int $id, EntityManagerInterface $entityManager): Response
     {
+        $motivationApiUrl = $this->getParameter('MOTIVATION_API_URL');
         $quiz = $entityManager->getRepository(Quiz::class)->find($id);
         $randomNumberApiUrl = $this->getParameter('RANDOM_NUMBER_API_URL');
 
@@ -40,6 +41,7 @@ final class QuizController extends AbstractController
         return $this->render('quiz/index.html.twig', [
             'quiz' => $quiz,
             'random_number_api_url' => $randomNumberApiUrl,
+            'motivational_api_url' => $motivationApiUrl,
         ]);
     }
 
