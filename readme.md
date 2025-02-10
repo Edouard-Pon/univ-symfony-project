@@ -13,6 +13,8 @@ Ce projet est destiné à la génération de tests de type QCM à l'aide de l'in
 
     Ce service repose sur Ollama, et pour l'installer, exécutez les commandes suivantes :
 
+   Veuillez visiter le lien suivant pour plus d'informations sur Ollama API [Ollama Api Doc](https://github.com/ollama/ollama/blob/main/docs/api.md)
+
    Veuiilez visiter le lien suivant pour plus d'informations sur Ollama Docker [Ollama Docker](https://hub.docker.com/r/ollama/ollama)
     
    GPU:
