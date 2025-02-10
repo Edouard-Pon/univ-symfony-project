@@ -3,17 +3,16 @@
 {% block title %}Quiz Result{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    </style>
+    <div class="flex flex-col items-center justify-center w-full min-h-screen h-full bg-gray-900 text-white">
+        <div class="flex flex-col mb-4 bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg">
+            <h1 class="text-white text-2xl mb-4">{{ 'quiz_result_title'|trans({'%prompt%': quiz.prompt}) }}</h1>
 
-    <div class="example-wrapper">
-        <h1>{{ 'quiz_result_title'|trans({'%prompt%': quiz.prompt}) }}</h1>
-
-        <p>{{ 'quiz_result_message'|trans({'%correct%': correctAnswers, '%total%': totalQuestions}) }}</p>
-        <a href="{{ path('app_home') }}">
-            <button>{{ 'return_home'|trans }}</button>
-        </a>
+            <p class="text-indigo-300 mb-4">{{ 'quiz_result_message'|trans({'%correct%': correctAnswers, '%total%': totalQuestions}) }}</p>
+            <a href="{{ path('app_home') }}">
+                <button class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                    {{ 'return_home'|trans }}
+                </button>
+            </a>
+        </div>
     </div>
 {% endblock %}

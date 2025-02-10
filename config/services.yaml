@@ -9,6 +9,7 @@ parameters:
     RANDOM_NUMBER_API_URL: '%env(RANDOM_NUMBER_API_URL)%'
     app.supported_locales: en|fr
     app.default_locale: en
+    MOTIVATION_API_URL: '%env(MOTIVATION_API_URL)%'
 
 services:
     # default configuration for services in *this* file

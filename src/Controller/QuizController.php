@@ -21,6 +21,7 @@ final class QuizController extends AbstractController
     #[Route('/{_locale<%app.supported_locales%>}/quiz/{id}', name: 'app_quiz_show')]
     public function show(int $id, EntityManagerInterface $entityManager): Response
     {
+        $motivationApiUrl = $this->getParameter('MOTIVATION_API_URL');
         $quiz = $entityManager->getRepository(Quiz::class)->find($id);
         $randomNumberApiUrl = $this->getParameter('RANDOM_NUMBER_API_URL');
 
@@ -40,6 +41,7 @@ final class QuizController extends AbstractController
         return $this->render('quiz/index.html.twig', [
             'quiz' => $quiz,
             'random_number_api_url' => $randomNumberApiUrl,
+            'motivational_api_url' => $motivationApiUrl,
         ]);
     }
 
@@ -78,6 +80,23 @@ final class QuizController extends AbstractController
                     $correctAnswers++;
                 }
             }
+        }
+
+        return $this->redirectToRoute('app_quiz_result', [
+            'quizId' => $quizId,
+            'correctAnswers' => $correctAnswers,
+            'totalQuestions' => $totalQuestions,
+        ]);
+    }
+
+    // TODO - check this route and fix it if needed
+    #[Route('/quiz-result/{quizId}/{correctAnswers}/{totalQuestions}', name: 'app_quiz_result')]
+    public function result(int $quizId, int $correctAnswers, int $totalQuestions, EntityManagerInterface $entityManager): Response
+    {
+        $quiz = $entityManager->getRepository(Quiz::class)->find($quizId);
+
+        if (!$quiz) {
+            throw $this->createNotFoundException('The quiz does not exist');
         }
 
         return $this->render('quiz/result.html.twig', [

@@ -3,40 +3,43 @@
 {% block title %}{{ 'login_title'|trans }}{% endblock %}
 
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    <div class="flex flex-col items-center justify-center w-full min-h-screen h-full">
+        <form method="post">
+            {% if error %}
+                <div class="bg-red-500 text-white p-4 rounded-lg mb-4">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-        {% if app.user %}
-            <div class="mb-3">
-                {{ 'logged_in_as'|trans({'%username%': app.user.userIdentifier}) }}, <a href="{{ path('app_logout') }}">{{ 'logout'|trans }}</a>
+            {% if app.user %}
+               <div class="mb-3 text-indigo-300">
+                   {{ 'logged_in_as'|trans({'%username%': app.user.userIdentifier}) }}, <a href="{{ path('app_logout') }}" class="text-indigo-500 hover:text-indigo-300">{{ 'logout'|trans }}</a>
+               </div>
+            {% endif %}
+
+            <div class="flex flex-col mb-4 bg-gray-800 p-6 rounded-lg shadow-lg">
+                <h1 class="text-white text-2xl mb-4">{{ 'login_prompt'|trans }}</h1>
+                <label for="username" class="text-indigo-300 mb-2">{{ 'email_label'|trans }}</label>
+                <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control p-2 mb-4 rounded bg-gray-900 text-white border border-indigo-500" autocomplete="email" required autofocus>
+                <label for="password" class="text-indigo-300 mb-2">{{ 'password_label'|trans }}</label>
+                <input type="password" name="_password" id="password" class="form-control p-2 mb-4 rounded bg-gray-900 text-white border border-indigo-500" autocomplete="current-password" required>
+                <button class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50" type="submit">
+                    {{ 'sign_in'|trans }}
+                </button>
+                <p class="text-white mt-4">{{ 'no_account'|trans }} <a href="{{ path('app_register') }}" class="text-indigo-500 hover:text-indigo-300">{{ 'register'|trans }}</a></p>
             </div>
-        {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">{{ 'login_prompt'|trans }}</h1>
-        <label for="username">{{ 'email_label'|trans }}</label>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-        <label for="password">{{ 'password_label'|trans }}</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
 
         {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
+            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+            See https://symfony.com/doc/current/security/remember_me.html
 
-        <div class="checkbox mb-3">
-            <input type="checkbox" name="_remember_me" id="_remember_me">
-            <label for="_remember_me">{{ 'remember_me'|trans }}</label>
-        </div>
-        #}
-
-        <button class="btn btn-lg btn-primary" type="submit">
-            {{ 'sign_in'|trans }}
-        </button>
-    </form>
-    <p>{{ 'no_account'|trans }} <a href="{{ path('app_register') }}">{{ 'register'|trans }}</a>
+            <div class="checkbox mb-3">
+                <input type="checkbox" name="_remember_me" id="_remember_me">
+                <label for="_remember_me">Remember me</label>
+            </div>
+            #}
+        </form>
+    </div>
 {% endblock %}

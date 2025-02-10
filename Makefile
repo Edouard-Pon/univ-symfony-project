@@ -28,8 +28,14 @@ setup-db:
 	@echo "Done!"
 
 setup-dev:
-	@echo "Installing dependencies..."
+	@echo "Installing composer dependencies..."
 	composer install
+
+	@echo "Installing node dependencies..."
+	npm install
+
+	@echo "Building assets..."
+	npm run build
 
 	@echo "Setting up database..."
 	$(MAKE) setup-db-dev
@@ -37,8 +43,14 @@ setup-dev:
 	@echo "Done!"
 
 setup:
-	@echo "Installing dependencies..."
+	@echo "Installing composer dependencies..."
 	composer install
+
+	@echo "Installing node dependencies..."
+	npm install
+
+	@echo "Building assets..."
+	npm run build
 
 	@echo "Setting up database..."
 	$(MAKE) setup-db

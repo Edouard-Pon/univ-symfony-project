@@ -26,11 +26,11 @@ Ce projet est destiné à la génération de tests de type QCM à l'aide de l'in
 
     Après avoir lancé le conteneur avec Ollama, vous devez également télécharger et exécuter deux autres API responsables des fonctionnalités "divertissement" aux liens suivants :
 
-    🔹 API 1 – symf-api (https://github.com/YehorKuzmenko/symf-api )
+    🔹 API 1 – [symf-api](https://github.com/YehorKuzmenko/symf-api )
 
     👉 Cette API correspond à la variable RANDOM_NUMBER_API_URL dans le fichier .env.
 
-    🔹 API 2 – univ-symfony-api-project(https://github.com/YehorKuzmenko/symf-api)
+    🔹 API 2 – [univ-symfony-api-project](https://github.com/Edouard-Pon/univ-symfony-api-project)
 
     👉 Cette API correspond à la variable MOTIVATION_API_URL dans le fichier .env.
 
