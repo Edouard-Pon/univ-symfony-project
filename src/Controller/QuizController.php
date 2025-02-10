@@ -90,7 +90,7 @@ final class QuizController extends AbstractController
     }
 
     // TODO - check this route and fix it if needed
-    #[Route('/quiz-result/{quizId}/{correctAnswers}/{totalQuestions}', name: 'app_quiz_result')]
+    #[Route('/{_locale<%app.supported_locales%>}/quiz-result/{quizId}/{correctAnswers}/{totalQuestions}', name: 'app_quiz_result')]
     public function result(int $quizId, int $correctAnswers, int $totalQuestions, EntityManagerInterface $entityManager): Response
     {
         $quiz = $entityManager->getRepository(Quiz::class)->find($quizId);
