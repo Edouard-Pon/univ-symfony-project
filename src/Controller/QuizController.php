@@ -41,6 +41,7 @@ final class QuizController extends AbstractController
         return $this->render('quiz/index.html.twig', [
             'quiz' => $quiz,
             'random_number_api_url' => $randomNumberApiUrl,
+            'motivational_api_url' => $motivationApiUrl,
         ]);
     }
 

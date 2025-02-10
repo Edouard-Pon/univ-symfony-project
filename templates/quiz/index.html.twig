@@ -53,12 +53,13 @@
             <div>
                 <p id="motivation"></p>
             </div>
-            <button id="btn-motivation">Get Motivation</button>
+            <button id="btn-motivation" onclick="getMotivation()">Get Motivation</button>
         </div>
     </div>
 
     <script>
         const randomNumberApiUrl = "{{ random_number_api_url }}";
+        const motivationalApiUrl = "{{ motivational_api_url }}";
 
         function getRandomNumber() {
             const numAnswers = document.getElementById('numAnswers').value;
@@ -71,11 +72,17 @@
                     console.error('Error fetching random number:', error);
                 });
         }
+
+        function getMotivation() {
+            fetch(`${motivationalApiUrl}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('motivation').innerText = data.motivation;
+                })
+                .catch(error => {
+                    console.error('Error fetching motivation:', error);
+                });
+        }
     </script>
 
-    <script>
-        document.getElementById('btn-motivation').addEventListener('click', function() {
-
-        });
-    </script>
 {% endblock %}
