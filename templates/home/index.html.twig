@@ -34,9 +34,7 @@
         {% endfor %}
     </ul>
 
-    <form method="get" action="{{ path(app.request.attributes.get('_route')) }}">
-        <button type="submit" name="_locale" value="fr">Français</button>
-        <button type="submit" name="_locale" value="en">English</button>
-    </form>
+    <a href="{{ path('app_home', {'_locale': 'en'}) }}">🇬🇧 English</a>
+    <a href="{{ path('app_home', {'_locale': 'fr'}) }}">🇫🇷 Français</a>
 </div>
 {% endblock %}

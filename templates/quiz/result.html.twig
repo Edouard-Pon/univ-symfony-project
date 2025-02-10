@@ -9,11 +9,11 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Quiz {{ quiz.prompt }} Result</h1>
+        <h1>{{ 'quiz_result_title'|trans({'%prompt%': quiz.prompt}) }}</h1>
 
-        <p>You answered {{ correctAnswers }} out of {{ totalQuestions }} questions correctly.</p>
+        <p>{{ 'quiz_result_message'|trans({'%correct%': correctAnswers, '%total%': totalQuestions}) }}</p>
         <a href="{{ path('app_home') }}">
-            <button>Return to home</button>
+            <button>{{ 'return_home'|trans }}</button>
         </a>
     </div>
 {% endblock %}
