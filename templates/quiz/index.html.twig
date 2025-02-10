@@ -24,7 +24,7 @@
                 <li>{{ 'quiz_user'|trans }}: {{ quiz.user.email }}</li>
             </ul>
 
-            <h2 class="text-indigo-300 text-xl mb-4">{{ 'random_number_prompt'|trans }}</h2>
+            <h2 class="text-indigo-300 text-xl mb-4">{{ 'quiz_title'|trans({'%prompt%': quiz.prompt}) }}</h2>
             <form method="post" action="{{ path('app_quiz_submit') }}" class="flex flex-col">
                 <input type="hidden" name="quiz_id" value="{{ quiz.id }}">
                 {% for question in quiz.questions %}

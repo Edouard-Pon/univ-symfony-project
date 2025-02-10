@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Quiz{% endblock %}
 
 {% block body %}
 <style>
@@ -50,9 +50,6 @@
                 <li><a href="{{ path('app_quiz_show', { 'id': quiz.id }) }}" class="text-indigo-500 hover:text-indigo-300">{{ quiz.prompt }}</a></li>
             {% endfor %}
         </ul>
-
-        <a href="{{ path('app_home', {'_locale': 'en'}) }}">🇬🇧 English</a>
-        <a href="{{ path('app_home', {'_locale': 'fr'}) }}">🇫🇷 Français</a>
     </div>
 </div>
 {% endblock %}
