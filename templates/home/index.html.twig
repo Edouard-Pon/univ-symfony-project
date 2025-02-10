@@ -9,29 +9,34 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Welcome to the Quiz Application!</h1>
+    <h1>{{ 'welcome_message'|trans }}</h1>
 
-    <h2>Generate your own quiz using AI</h2>
+    <h2>{{ 'generate_quiz'|trans }}</h2>
     <form method="post" action="{{ path('app_quiz_generate') }}">
-        <label for="prompt">Prompt:</label>
+        <label for="prompt">{{ 'prompt_label'|trans }}</label>
         <input type="text" id="prompt" name="prompt" required>
-        <label for="number_of_questions">Number of Questions:</label>
+        <label for="number_of_questions">{{ 'number_of_questions_label'|trans }}</label>
         <input type="number" id="number_of_questions" name="number_of_questions" required>
-        <label for="options_type">Options type:</label>
-        <label for="single">Single choice</label>
+        <label for="options_type">{{ 'options_type_label'|trans }}</label>
+        <label for="single">{{ 'single_choice'|trans }}</label>
         <input type="radio" id="single" name="options_type" value="single" required />
-        <label for="multiple">Multiple choice</label>
+        <label for="multiple">{{ 'multiple_choice'|trans }}</label>
         <input type="radio" id="multiple" name="options_type" value="multiple" required />
-        <label for="mixed">Mixed</label>
+        <label for="mixed">{{ 'mixed_choice'|trans }}</label>
         <input type="radio" id="mixed" name="options_type" value="mixed" required />
-        <button type="submit">Generate Quiz</button>
+        <button type="submit">{{ 'generate_button'|trans }}</button>
     </form>
 
-    <h2>Available Quizzes:</h2>
+    <h2>{{ 'available_quizzes'|trans }}</h2>
     <ul>
         {% for quiz in quizzes %}
             <li><a href="{{ path('app_quiz_show', { 'id': quiz.id }) }}">{{ quiz.prompt }}</a></li>
         {% endfor %}
     </ul>
+
+    <form method="get" action="{{ path(app.request.attributes.get('_route')) }}">
+        <button type="submit" name="_locale" value="fr">Français</button>
+        <button type="submit" name="_locale" value="en">English</button>
+    </form>
 </div>
 {% endblock %}
