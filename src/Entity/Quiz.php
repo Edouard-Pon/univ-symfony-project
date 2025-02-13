@@ -18,6 +18,9 @@ class Quiz
     #[ORM\Column(length: 255)]
     private ?string $prompt = null;
 
+    #[ORM\Column(length: 10)]
+    private ?string $language = null;
+
     #[ORM\ManyToOne(inversedBy: 'quizzes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -46,6 +49,18 @@ class Quiz
     public function setPrompt(string $prompt): static
     {
         $this->prompt = $prompt;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language): static
+    {
+        $this->language = $language;
 
         return $this;
     }
