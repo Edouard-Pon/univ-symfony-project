@@ -9,6 +9,8 @@ multiple_choice: "Multiple choice"
 mixed_choice: "Mixed"
 generate_button: "Generate Quiz"
 available_quizzes: "Available Quizzes:"
+your_score: "Your score:"
+no_results_yet: "No results yet"
 #Quiz Page
 quiz_title: "Quiz: %prompt%"
 quiz_id: "ID"
@@ -46,4 +48,5 @@ remember_me: "Remember me"
 sign_in: "Sign in"
 no_account: "No account?"
 register: "Register"
+
 

@@ -48,7 +48,15 @@
         <h2 class="text-indigo-300 text-xl mt-6 mb-4">{{ 'available_quizzes'|trans }}</h2>
         <ul class="list-disc list-inside">
             {% for quiz in quizzes %}
-                <li><a href="{{ path('app_quiz_show', { 'id': quiz.id }) }}" class="text-indigo-500 hover:text-indigo-300">{{ quiz.prompt }}</a></li>
+                <li>
+                    <a href="{{ path('app_quiz_show', { 'id': quiz.id }) }}" class="text-indigo-500 hover:text-indigo-300">{{ quiz.prompt }}</a>
+                    {% set result = testResults|filter(result => result.qcm.id == quiz.id)|first %}
+                    {% if result %}
+                        <p class="ml-2">{{ 'your_score'|trans }} {{ result.score }}/{{ result.numQuestions }}</p>
+                    {% else %}
+                        <p class="ml-2">{{ 'no_results_yet'|trans }}</p>
+                    {% endif %}
+                </li>
             {% endfor %}
         </ul>
     </div>

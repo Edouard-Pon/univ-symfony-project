@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Option;
 use App\Entity\Question;
 use App\Entity\Quiz;
+use App\Entity\TestResult;
 use App\Enum\QuestionType;
 use App\Utils\QuizValidationUtility;
 use Doctrine\ORM\EntityManagerInterface;
@@ -81,6 +82,26 @@ final class QuizController extends AbstractController
                 }
             }
         }
+
+        $user = $this->getUser();
+        $testResultRepository = $entityManager->getRepository(TestResult::class);
+        $testResult = $testResultRepository->findOneBy(['user' => $user, 'qcm' => $quiz]);
+
+        if (!$testResult) {
+            $testResult = new TestResult();
+            $testResult->setUser($user);
+            $testResult->setQcm($quiz);
+            $testResult->setScore($correctAnswers);
+            $testResult->setNumQuestions($totalQuestions);
+            $entityManager->persist($testResult);
+        } else {
+            if ($correctAnswers > $testResult->getScore()) {
+                $testResult->setScore($correctAnswers);
+                $entityManager->persist($testResult);
+            }
+        }
+
+        $entityManager->flush();
 
         return $this->redirectToRoute('app_quiz_result', [
             'quizId' => $quizId,
