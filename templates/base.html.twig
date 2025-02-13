@@ -2,7 +2,6 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -13,28 +12,34 @@
         {% endblock %}
     </head>
     <header class="top-0 left-0 w-full bg-gray-800 p-4 z-50 flex gap-9 items-center justify-end shadow-lg">
-        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'en'})) }}" class="lang-switch">
+        <a href="{{ path('app_logout') }}" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 ">
+            {{ 'logout'|trans }}
+        </a>
+
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'en'})) }}" class="lang-switch justify-end">
             <img
-                src="https://flagcdn.com/60x45/us.png"
-                srcset="https://flagcdn.com/120x90/us.png 2x,
-                        https://flagcdn.com/180x135/us.png 3x"
-                width="60"
-                height="45"
-                alt="United States"
-                class="hover:opacity-75 transition-opacity duration-300"
+                    src="https://flagcdn.com/60x45/us.png"
+                    srcset="https://flagcdn.com/120x90/us.png 2x,
+                https://flagcdn.com/180x135/us.png 3x"
+                    width="60"
+                    height="45"
+                    alt="United States"
+                    class="hover:opacity-75 transition-opacity duration-300"
             >
         </a>
-        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'fr'})) }}" class="lang-switch">
+        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'fr'})) }}" class="lang-switch justify-end">
             <img
-                src="https://flagcdn.com/60x45/fr.png"
-                srcset="https://flagcdn.com/120x90/fr.png 2x,
-                        https://flagcdn.com/180x135/fr.png 3x"
-                width="60"
-                height="45"
-                alt="France"
-                class="hover:opacity-75 transition-opacity duration-300"
+                    src="https://flagcdn.com/60x45/fr.png"
+                    srcset="https://flagcdn.com/120x90/fr.png 2x,
+                https://flagcdn.com/180x135/fr.png 3x"
+                    width="60"
+                    height="45"
+                    alt="France"
+                    class="hover:opacity-75 transition-opacity duration-300"
             >
         </a>
+
+
     </header>
     <body class="w-full min-h-screen h-full bg-gray-900 text-white">
         {% block body %}
