@@ -34,6 +34,7 @@ register_login: "Connexion"
 agree_terms_message: "Vous devez accepter nos conditions."
 enter_password_message: "Veuillez entrer un mot de passe"
 password_min_length_message: "Votre mot de passe doit comporter au moins %limit% caractères"
+agree_to_terms: "Accepter les conditions"
 #Login
 login_title: "Connexion!"
 logged_in_as: "Vous êtes connecté en tant que %username%"

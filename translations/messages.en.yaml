@@ -34,6 +34,7 @@ register_login: "Login"
 agree_terms_message: "You should agree to our terms."
 enter_password_message: "Please enter a password"
 password_min_length_message: "Your password should be at least %limit% characters"
+agree_to_terms: "Agree to terms"
 #Login
 login_title: "Log in!"
 logged_in_as: "You are logged in as %username%"
