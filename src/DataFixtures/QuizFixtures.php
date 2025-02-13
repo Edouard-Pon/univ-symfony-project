@@ -35,6 +35,7 @@ class QuizFixtures extends Fixture
         $quiz1 = new Quiz();
         $quiz1->setUser($user);
         $quiz1->setPrompt('First Quiz Prompt');
+        $quiz1->setLanguage('en');
 
 // Question 1
         $question1 = new Question();
@@ -152,6 +153,7 @@ class QuizFixtures extends Fixture
         $quiz2 = new Quiz();
         $quiz2->setUser($user);
         $quiz2->setPrompt('Second Quiz Prompt');
+        $quiz2->setLanguage('fr');
 
         $question2 = new Question();
         $question2->setTitle('Second Question Title');
