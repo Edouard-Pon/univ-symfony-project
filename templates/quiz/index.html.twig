@@ -27,10 +27,12 @@
             <h2 class="text-indigo-300 text-xl mb-4">{{ 'quiz_title'|trans({'%prompt%': quiz.prompt}) }}</h2>
             <form method="post" action="{{ path('app_quiz_submit') }}" class="flex flex-col">
                 <input type="hidden" name="quiz_id" value="{{ quiz.id }}">
+                {% set questionNumber = 1 %}
                 {% for question in quiz.questions %}
                     <div class="mb-4">
-                        <h3 class="text-white mb-2">{{ question.content }}</h3>
-                        <ul class="list-none">
+                        <h3 class="text-white mb-2">{{ questionNumber }}. {{ question.content }}</h3>
+                        {% set questionNumber = questionNumber + 1 %}
+                        <ul class="list-none ml-8">
                             {% for option in question.options %}
                                 {% if question.type == constant('App\\Enum\\QuestionType::MULTIPLE') %}
                                     <li class="mb-2">
