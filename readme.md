@@ -71,7 +71,7 @@ Ce projet est destiné à la génération de tests de type QCM à l'aide de l'in
 
    Par défaut, si vous avez utilisé la commande `make setup-dev`, un utilisateur est déjà créé dans la base de données. Vous pouvez l'utiliser pour vous connecter avec les identifiants suivants :
 
-    📧 Email : admin@exemple.com
+    📧 Email : admin@example.com
 
     🔑 Mot de passe : password123
 
