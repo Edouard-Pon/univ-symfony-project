@@ -106,7 +106,7 @@ final class QuizController extends AbstractController
         ]);
     }
 
-    #[Route('/quiz-generate', name: 'app_quiz_generate', methods: ['POST'])]
+    #[Route('/{_locale<%app.supported_locales%>}/quiz-generate', name: 'app_quiz_generate', methods: ['POST'])]
     public function create(Request $request, HttpClientInterface $httpClient, EntityManagerInterface $entityManager): Response
     {
         $apiUrl = $this->getParameter('API_URL');
@@ -115,15 +115,16 @@ final class QuizController extends AbstractController
         $userPrompt = $request->request->get('prompt');
         $numberOfQuestions = $request->request->get('number_of_questions');
         $optionsType = $request->request->get('options_type');
+        $language = $request->request->get('language');
 
         if ($optionsType === 'mixed') {
             $optionsType = 'single or multiple';
         }
-
         $jsonTemplate = '
             {
                 "quiz": {
                     "title": "Quiz Title",
+                    "language": "en" or "fr",
                     "questions": [
                         {
                             "id": 1,
@@ -143,6 +144,7 @@ final class QuizController extends AbstractController
 
         $prompt = "
             GENERATE A $userPrompt QUIZ WITH $numberOfQuestions QUESTIONS. $optionsType CHOICE QUESTIONS.
+            THE QUIZ MUST BE IN $language LANGUAGE.
             ENSURE THAT THE QUESTIONS MATCH THE THEME OF THE QUIZ.
             FOLLOW THESE RULES:
             1. Return valid JSON matching this structure:
@@ -172,6 +174,7 @@ final class QuizController extends AbstractController
                         'type' => 'object',
                         'properties' => [
                             'title' => ['type' => 'string'],
+                            'language' => ['type' => 'string'],
                             'questions' => [
                                 'type' => 'array',
                                 'items' => [
@@ -225,6 +228,7 @@ final class QuizController extends AbstractController
             $quiz = new Quiz();
             $quiz->setPrompt($quizData['quiz']['title']);
             $quiz->setUser($user);
+            $quiz->setLanguage($quizData['quiz']['language']);
 
             foreach ($quizData['quiz']['questions'] as $questionData) {
                 $question = new Question();

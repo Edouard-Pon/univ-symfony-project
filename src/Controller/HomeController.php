@@ -15,8 +15,8 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(EntityManagerInterface $entityManager, Request $request ): Response
     {
-
-        $quizzes = $entityManager->getRepository(Quiz::class)->findAll();
+        $locale = $request->getLocale();
+        $quizzes = $entityManager->getRepository(Quiz::class)->findBy(['language' => $locale]);
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
