@@ -9,6 +9,8 @@ multiple_choice: "Choix multiple"
 mixed_choice: "Mixte"
 generate_button: "Générer le quiz"
 available_quizzes: "Quiz disponibles:"
+your_score: "Votre score:"
+no_results_yet: "Pas encore de résultats"
 #Quiz Page
 quiz_title: "Quiz: %prompt%"
 quiz_id: "ID"

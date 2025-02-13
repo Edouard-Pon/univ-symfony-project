@@ -41,9 +41,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'user')]
     private Collection $quizzes;
 
+    /**
+     * @var Collection<int, TestResult>
+     */
+    #[ORM\OneToMany(targetEntity: TestResult::class, mappedBy: 'user')]
+    private Collection $testresults;
+
     public function __construct()
     {
         $this->quizzes = new ArrayCollection();
+        $this->testresults = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -145,6 +152,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($quiz->getUser() === $this) {
                 $quiz->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TestResult>
+     */
+    public function getTestresults(): Collection
+    {
+        return $this->testresults;
+    }
+
+    public function addTestresult(TestResult $testresult): static
+    {
+        if (!$this->testresults->contains($testresult)) {
+            $this->testresults->add($testresult);
+            $testresult->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTestresult(TestResult $testresult): static
+    {
+        if ($this->testresults->removeElement($testresult)) {
+            // set the owning side to null (unless already changed)
+            if ($testresult->getUser() === $this) {
+                $testresult->setUser(null);
             }
         }
 
