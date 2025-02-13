@@ -11,13 +11,14 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <header class="top-0 left-0 w-full bg-gray-800 p-4 z-50 flex gap-9 items-center justify-end shadow-lg">
+    <header class="top-0 left-0 w-full bg-gray-800 p-4 z-50 flex gap-9 items-center justify-start shadow-lg">
         {% if is_granted('ROLE_USER') %}
-            <a href="{{ path('app_logout') }}" class="bg-red-500 mr-auto text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 ">
+            <a href="{{ path('app_logout') }}" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 ">
                 {{ 'logout'|trans }}
             </a>
+            <a href="{{ path('app_home') }}" class="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">Home</a>
         {% endif %}
-        <div class="flex gap-4">
+        <div class="flex ml-auto gap-4">
             <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'en'})) }}" class="lang-switch justify-end">
                 <img
                         src="https://flagcdn.com/60x45/us.png"
